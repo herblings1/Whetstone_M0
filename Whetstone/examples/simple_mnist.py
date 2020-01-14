@@ -57,3 +57,26 @@ print(model.evaluate(x_test, y_test))
 
 model.save('simple_mnist_T0.h5')
 
+model_new = keras.models.load_model('simple_mnist_T0.h5', custom_objects={"Spiking_BRelu":Spiking_BRelu,"Softmax_Decode": Softmax_Decode})
+
+model_new = tensorflow.model.load_model('simple_mnist_T0.h5', custom_objects={"Spiking_BRelu":Spiking_BRelu,"Softmax_Decode": Softmax_Decode})
+
+model_test = tensorflow.lite.TFLiteConverter.from_keras_model_file('simple_mnist_T0.h5', custom_objects={"Spiking_BRelu": Spiking_BRelu,"Softmax_Decode": Softmax_Decode})
+model_test.optimizations = [tf.lite.Optimize.DEFAULT]
+model_out = model_test.convert()
+open("converted_model.tflite", "wb").write(model_out)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
